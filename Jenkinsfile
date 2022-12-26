@@ -1,7 +1,7 @@
 pipeline {
         agent {
   label 'centos7'
-} 
+        } 
 
     stages {
         stage('Checkout Code') {
@@ -35,7 +35,18 @@ pipeline {
     }
     post {
         always {
-             chuckNorris()   
-        }
+             chuckNorris()  
+              
+            }
+        aborted {
+             slackSend channel: '#general', message: 'build was aborted'
+         }
+        failure {
+              slackSend channel: '#general', message: 'build is failing '
+         }
+        fixed {
+          slackSend channel: '#general', message: 'someone fixed the build, now its ok.'
+         }
     }
+
 }
