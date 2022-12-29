@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                    sh '''docker build . -t lidorlg/node:${BUILD_ID} '''
+                    sh '''docker build . -t aviazo/node:${BUILD_ID} '''
                
             }
         }
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Push to Docker Hub ') {
             steps {
-                sh "docker push lidorlg/node:${BUILD_ID} "
+                sh "docker push aviazo/node:${BUILD_ID} "
 
             }
         }
