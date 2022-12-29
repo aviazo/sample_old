@@ -6,30 +6,29 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                cleanWs()
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/digitalocean/sample-nodejs.git']]])
+           
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'sample-app']], userRemoteConfigs: [[url: 'https://github.com/digitalocean/sample-nodejs.git']]])
             }
         }
         stage('Build') {
             steps {
-                sh ''' export APP=DEVELOP;  
-                    npm install;
-                    ls;
-                    echo $APP; '''
+                    sh '''docker build . -t lidorlg/node:${BUILD_ID} '''
                
             }
         }
         stage('Test') {
             steps {
-                sh 'nohup node index.js &'
+                sh 'docker run  --name node-test -itd -p 3000:3000 lidorlg/node:${BUILD_ID} '
                 sh 'curl localhost:3000'
+                sh 'docker stop node-test'
+                sh 'docker rm node-test'
    
             }
         }
-        stage('Package') {
+        stage('Push to Docker Hub ') {
             steps {
-                sh "tar -czvf package-${BUILD_ID}.tar.gz *"
-                archive '*.tar.gz'
+                sh "docker push lidorlg/node:${BUILD_ID} "
+
             }
         }
     }
