@@ -20,8 +20,8 @@ pipeline {
             steps {
                 sh 'docker run  --name node-test -itd -p 3000:3000 aviazo/node:${BUILD_ID} '
                 sh 'curl localhost:3000'
-                sh 'docker stop node-test'
-                sh 'docker rm node-test'
+                sh 'docker stop node-test1'
+                sh 'docker rm node-test1'
    
             }
         }
