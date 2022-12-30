@@ -37,7 +37,7 @@ pipeline {
              chuckNorris()  
               
             }
-        '''aborted {
+        ///aborted {
              slackSend channel: '#general', message: 'build was aborted'
          }
         failure {
@@ -45,7 +45,7 @@ pipeline {
          }
         fixed {
           slackSend channel: '#general', message: 'someone fixed the build, now its ok.'
-         }'''
+         }///
     }
 
 }
