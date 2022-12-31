@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker run  --name node-test -itd -p 3000:3000 aviazo/node:${BUILD_ID} '
-                sh 'curl localhost:3000'
+                sh 'curl http://localhost:3000'
                 sh 'docker stop node-test'
                 sh 'docker rm node-test'
    
