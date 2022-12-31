@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Push to Docker Hub ') {
             steps {
-                sh "docker push aviazo/node:${BUILD_ID} "
+                sh "docker push aviazo/node:${BUILD_ID}"
 
             }
         }
